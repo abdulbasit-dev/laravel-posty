@@ -10,7 +10,6 @@
 </head>
 
 <body class="bg-gray-200">
-
   <nav class="py-6 px-16 bg-white flex justify-between mb-6">
     <ul class="flex items-center">
       <li>
@@ -20,7 +19,7 @@
         <a href="" class="p-3">Dashboard</a>
       </li>
       <li>
-        <a href="" class="p-3">Post</a>
+        <a href="{{ route('posts') }}" class="p-3">Post</a>
       </li>
     </ul>
     <ul class="flex items-center">
@@ -34,7 +33,7 @@
         <a href="" class="p-3">Logout</a>
       </li>
       <li>
-        <a href="" class="p-3">Register</a>
+        <a href="{{ route('register') }}" class="p-3">Register</a>
       </li>
     </ul>
   </nav>
