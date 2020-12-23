@@ -9,7 +9,8 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::paginate(6); //return a colletion
+        //perform egger loading
+        $posts = Post::with(['user', 'likes'])->orderBy("id", 'DESC')->paginate(6); //return a colletion
         return view("posts.index", ["posts" => $posts]);
     }
 
