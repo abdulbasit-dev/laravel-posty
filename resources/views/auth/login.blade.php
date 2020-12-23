@@ -4,6 +4,10 @@
   <div class="flex justify-center">
     <div class="bg-white p-6 w-4/12 rounded-lg">
       <h1 class="text-center text-2xl mb-6">Welcome Back, Login To enter your account</h1>
+
+      @if (session()->has('message'))
+        <div class="bg-red-500 rounded-lg p-3 mb-6 text-white font-medium text-center"> {{ session('message') }}</div>
+      @endif
       <form action="{{ route('login') }}" method="POST" autocomplete="on">
         @csrf
 
@@ -26,6 +30,14 @@
           @error('password')
             <small class="text-red-500 text-sm">{{ $message }}</small>
           @enderror
+        </div>
+
+        <div class="mb-4">
+          <div class="flex items-center">
+            <input type="checkbox" id="remember" name="remember" class="mr-2">
+            <label for="remember">Remeber me</label>
+
+          </div>
         </div>
 
 

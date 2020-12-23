@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Post;
+use App\Models\Like;
 
 class User extends Authenticatable
 {
@@ -41,4 +44,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    //define Elequed relationship
+    //user has many post
+    public function posts()
+    {
+        return  $this->hasMany(Post::class);
+    }
+
+    //user has many likes
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
 }
