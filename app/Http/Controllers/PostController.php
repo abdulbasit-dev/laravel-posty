@@ -7,10 +7,15 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth'])->only(["store"]);
+    }
+
     public function index()
     {
         //perform egger loading
-        $posts = Post::with(['user', 'likes'])->orderBy("id", 'DESC')->paginate(6); //return a colletion
+        $posts = Post::latest()->with(['user', 'likes'])->paginate(6); //return a colletion
         return view("posts.index", ["posts" => $posts]);
     }
 
@@ -43,6 +48,16 @@ class PostController extends Controller
 
         //redirect
         //back() return back to the last page
+        return back();
+    }
+
+    public function destroy(Post $post)
+    {
+        if (!$post->ownedBy(auth()->user())) {
+            dd("no");
+        }
+
+        $post->delete();
         return back();
     }
 }
