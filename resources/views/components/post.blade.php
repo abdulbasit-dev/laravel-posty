@@ -6,10 +6,9 @@
     class="text-gray-600 text-sm">{{ $post->created_at->diffForHumans() }}</span>
   <p class="mb-2">{{ $post->body }}</p>
 
-  <div class="flex items-center justify-between">
+  <div class="flex items-center justify-between mb-4">
     @auth
       <div class="flex items-center">
-
         <div class="mr-4">
           @if (!$post->isLiked(auth()->user()))
             <form action="{{ route('posts.likes', $post->id) }}" class="mr-1" method="post">
@@ -38,5 +37,11 @@
 
     @endauth
   </div>
+  {{-- conditinal rendaring base on url --}}
+  @if (!Request::is('posts/*'))
+    <a href="{{ route('posts.show', $post) }}"
+      class="px-3 py-1  bg-indigo-500 hover:bg-indigo-600 font-medium rounded-lg text-white">Show Post</a>
+
+  @endif
   <div class="bg-gray-100 h-0.5 my-4"></div>
 </div>
