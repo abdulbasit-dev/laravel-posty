@@ -16,12 +16,16 @@ class LikeController extends Controller
 
     public function store(Post $post, Request $request)
     {
+
         //like a post through a post
         $post->likes()->create([
             'user_id' => $request->user()->id
         ]);
 
-        Mail::to($post->user)->send(new PostLiked(auth()->user(), $post));
+        //has this user liked before but that like has been deleted
+        if (!$post->likes()->onlyTrashed()->where("user_id", $request->user()->id)->count()) {
+            Mail::to($post->user)->send(new PostLiked(auth()->user(), $post));
+        }
 
         //recirect
         return back();
