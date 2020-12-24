@@ -23,12 +23,12 @@
         </form>
       @endauth
 
-      @if (!$posts->count() > 0)
-        <p>There is no Post 😢</p>
-      @endif
+
 
       @foreach ($posts as $post)
-
+        @if (!$posts->count() > 0)
+          <p>There is no Post 😢</p>
+        @endif
         <div class="mb-4 ">
           <a href="" class="font-bold">{{ $post->user->username }}</a> <span
             class="text-gray-600 text-sm">{{ $post->created_at->diffForHumans() }}</span>
@@ -55,14 +55,16 @@
                 </div>
                 <span>{{ $post->likes->count() }} {{ Str::plural('Like', $post->likes->count()) }}</span>
               </div>
-              @if ($post->ownedBy(auth()->user()))
+
+              @can('delete', $post)
                 <form action="{{ route('posts.destroy', $post) }}" class="mr-1" method="post">
                   @csrf
                   @method('DELETE')
                   <button class="text-red-500 font-medium">Delete</button>
                 </form>
+              @endcan
 
-              @endif
+
             @endauth
           </div>
           <div class="bg-gray-100 h-0.5 my-4"></div>
